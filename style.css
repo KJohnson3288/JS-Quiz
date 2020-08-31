@@ -1,0 +1,65 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: fantasy;
+}
+
+body {
+padding: 0px;
+margin: 0px;
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: black;
+}
+
+.container {
+    width: 700px;
+    max-width: 70%;
+    background-color: white;
+    border-style: groove;
+    border-width: 5px;
+    border-color: silver;
+    padding: 10px;
+    text-align: center;
+}
+
+.btn-grid {
+    display: grid;
+    gap: 10px;
+    margin: 10px 0px;
+}
+
+.answers {
+    padding: 5px;
+}
+
+#start-btn {
+    font-size: 15px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.controls {
+    align-content: center;
+}
+
+.hide {
+    display: none;
+}
+
+.time-container {
+    padding: 10px 0px 0px 0px;
+    margin: 0;
+    background-color: white;
+    text-align: center;
+    font-size: 30px;
+}
+
+#topScores {
+    height: 80vh;
+}
+
+
+
