@@ -80,13 +80,30 @@ var userInput = document.getElementById("user-input");
 var userName = document.getElementById("user-name");
 var userScore = document.getElementById("score");
 var score;
+var users = JSON.parse(localStorage.getItem("users"));
+var scoreList = JSON.parse(localStorage.getItem("scores"));
 
 //variable for the start button
 var startButton = document.getElementById("start-btn");
 startButton.addEventListener("click", startGame);
 
+//varible for the back button
+var backBtn = document.getElementById("back-button");
+
+
+//results page
+var topScores = document.getElementById("top-scores");
+
+
 //function for starting the quiz
 function startGame() {
+
+
+
+getArr();
+
+console.log(users);
+console.log(scoreList);
 
 startButton.classList.add("hide");
 userName.classList.add("hide");
@@ -100,6 +117,16 @@ score = 0
 getNewQuestion();
 startTimer();
 
+}
+
+function getArr() {
+    if (users === null && scoreList === null) {
+        users = [];
+        scoreList = [];
+    } else {
+        users = JSON.parse(localStorage.getItem("users"));
+        scoreList = JSON.parse(localStorage.getItem("scores"));
+    }
 }
 
 function getNewQuestion() {
@@ -117,9 +144,15 @@ function getNewQuestion() {
     availableQuestions.splice(questionsIndex, 1);
 
     if (availableQuestions == 0) {
-        localStorage.setItem("username", userName.value);
-        localStorage.setItem("score", JSON.stringify(score));
-        window.location.href = "scores.html";
+        users.push(userName.value);
+        console.log(users);
+        scoreList.push(score);
+        console.log(scoreList);
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("scores", JSON.stringify(scoreList));
+        questionContainerEl.classList.add("hide");
+        topScores.classList.remove("hide")
+        results();
     }
 }
 
@@ -146,7 +179,7 @@ function addAnswers() {
                 
             })
         }
-    }
+}
    
 
 function resetState() {
@@ -181,16 +214,33 @@ var timer = document.getElementById("timer");
 
 //time needs to stop at zero. Once time is out record score and go to the rankings page.
         if(counter == timeLeft) {
-            clearInterval(interval)
-            counter = 0;
-            localStorage.setItem("username", userName.value)
-            localStorage.setItem("score", JSON.stringify(score))
-            window.location.href = "scores.html";
-            
+            users.push(userName.value);
+            console.log(users);
+            scoreList.push(score);
+            console.log(scoreList);
+            localStorage.setItem("users", JSON.stringify(users));
+            localStorage.setItem("scores", JSON.stringify(scoreList));
+            questionContainerEl.classList.add("hide");
+            topScores.classList.remove("hide")
+            results();
         }
     }
 }
 
+function results() {
+    let userScore = JSON.parse(localStorage.getItem("scores"));
+    console.log(userScore);
+    let userName = JSON.parse(localStorage.getItem("users"));
+    console.log(userName);
+   
+    for(let i = 0; i < userScore.length; i++) {
+        let scoreList = document.getElementById("score-list");  
+        let playerScore = document.createElement("li");
+        playerScore.textContent = "Name: " + userName[i] + " " + "Score: " + userScore[i];
+        scoreList.appendChild(playerScore);
+    }
+        
+}
 
 
 
